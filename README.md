@@ -1,182 +1,197 @@
-# How do I submit patches to Android Common Kernels
 
-1. BEST: Make all of your changes to upstream Linux. If appropriate, backport to the stable releases.
-   These patches will be merged automatically in the corresponding common kernels. If the patch is already
-   in upstream Linux, post a backport of the patch that conforms to the patch requirements below.
+# Kokuban 内核 for 三星 Galaxy Z3 系列
 
-2. LESS GOOD: Develop your patches out-of-tree (from an upstream Linux point-of-view). Unless these are
-   fixing an Android-specific bug, these are very unlikely to be accepted unless they have been
-   coordinated with kernel-team@android.com. If you want to proceed, post a patch that conforms to the
-   patch requirements below.
+<p align="center">
+<img src="https://raw.githubusercontent.com/YuzakiKokuban/Kokuban_Kernel_CI_Center/main/docs/kokuban_logo.png" alt="Logo" width="150">
+</p>
 
-# Common Kernel patch requirements
+<p align="center">
+<a href="https://github.com/YuzakiKokuban/android_kernel_samsung_sm8350_Z3/releases"><img src="https://img.shields.io/github/v/release/YuzakiKokuban/android_kernel_samsung_sm8750?style=for-the-badge&logo=github&color=blue" alt="GitHub release"></a>
+<a href="https://t.me/YuzakiKokuban"><img src="https://img.shields.io/badge/Telegram-交流群-blue.svg?style=for-the-badge&logo=telegram" alt="Telegram"></a>
+</p>
 
-- All patches must conform to the Linux kernel coding standards and pass `script/checkpatch.pl`
-- Patches shall not break gki_defconfig or allmodconfig builds for arm, arm64, x86, x86_64 architectures
-(see  https://source.android.com/setup/build/building-kernels)
-- If the patch is not merged from an upstream branch, the subject must be tagged with the type of patch:
-`UPSTREAM:`, `BACKPORT:`, `FROMGIT:`, `FROMLIST:`, or `ANDROID:`.
-- All patches must have a `Change-Id:` tag (see https://gerrit-review.googlesource.com/Documentation/user-changeid.html)
-- If an Android bug has been assigned, there must be a `Bug:` tag.
-- All patches must have a `Signed-off-by:` tag by the author and the submitter
+这是一个基于三星官方内核源码构建的，适用于 **三星 Galaxy Z3 系列** 的高性能自定义内核。它旨在提供卓越的稳定性和流畅度，同时集成了最新的 KernelSU 功能，为您带来最佳的玩机体验。
 
-Additional requirements are listed below based on patch type
+## 📌 主要特性
 
-## Requirements for backports from mainline Linux: `UPSTREAM:`, `BACKPORT:`
+* **官方源码基础**: 基于三星官方最新的内核源码，确保最佳的兼容性和稳定性。
 
-- If the patch is a cherry-pick from Linux mainline with no changes at all
-    - tag the patch subject with `UPSTREAM:`.
-    - add upstream commit information with a `(cherry-picked from ...)` line
-    - Example:
-        - if the upstream commit message is
-```
-        important patch from upstream
+* **性能优化**: 针对性的性能调度优化，带来更流畅的日常使用和游戏体验。
 
-        This is the detailed description of the important patch
+* **KernelSU 集成**: 内置多种 KernelSU 版本（包括官方版、MKSU、SukiSU-Ultra），开箱即用。
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        UPSTREAM: important patch from upstream
+* **版本信息**: `-nongki-Kokuban-Wisadel`
 
-        This is the detailed description of the important patch
+## 🧩 可用版本详解
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+* **LKM (Loadable Kernel Module)**
 
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+  * 未内置任何 Root 方案，保持官方内核的纯净性。
 
-- If the patch requires any changes from the upstream version, tag the patch with `BACKPORT:`
-instead of `UPSTREAM:`.
-    - use the same tags as `UPSTREAM:`
-    - add comments about the changes under the `(cherry-picked from ...)` line
-    - Example:
-```
-        BACKPORT: important patch from upstream
+  * **安全性**: 仅移除了部分影响玩机的三星安全策略，如 RKP, KDP 等。
 
-        This is the detailed description of the important patch
+  * **使用方式**: 需要您通过 KernelSU Manager App 手动修补设备的 `init_boot` 分区来实现 Root。
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+* **KSU (KernelSU)**
 
-        Bug: 135791357
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        (cherry-picked from c31e73121f4c1ec41143423ac6ce3ce6dafdcec1)
-        [ Resolved minor conflict in drivers/foo/bar.c ]
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+  * 内置官方原版 KernelSU，提供最原汁原味的 Root 体验。
 
-## Requirements for other backports: `FROMGIT:`, `FROMLIST:`,
+* **MKSU (Magic KernelSU)**
 
-- If the patch has been merged into an upstream maintainer tree, but has not yet
-been merged into Linux mainline
-    - tag the patch subject with `FROMGIT:`
-    - add info on where the patch came from as `(cherry picked from commit <sha1> <repo> <branch>)`. This
-must be a stable maintainer branch (not rebased, so don't use `linux-next` for example).
-    - if changes were required, use `BACKPORT: FROMGIT:`
-    - Example:
-        - if the commit message in the maintainer tree is
-```
-        important patch from upstream
+  * 内置由 `5ec1cff` 修改的 KernelSU，特性是支持 Magic Mount，可以更方便地挂载模块。
 
-        This is the detailed description of the important patch
+* **SukiSUU (SukiSU-Ultra)**
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
-```
-        - then Joe Smith would upload the patch for the common kernel as
-```
-        FROMGIT: important patch from upstream
+  * 内置功能强大的 SukiSU-Ultra，支持 SUSFS 和 KPM 模块，为高级玩家提供更多可玩性。
 
-        This is the detailed description of the important patch
+## ⚙️ 安装指南
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+1. **解锁 Bootloader**: 请确保您的设备已经解锁 Bootloader。
 
-        Bug: 135791357
-        (cherry picked from commit 878a2fd9de10b03d11d2f622250285c7e63deace
-         https://git.kernel.org/pub/scm/linux/kernel/git/foo/bar.git test-branch)
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+2. **刷入 Recovery**: 推荐使用最新的 TWRP 或 OrangeFox Recovery。
+
+3. **刷入内核**: 在 Recovery 中刷入本项目 Releases 页面下载的内核 `zip` 包。
+
+4. **（仅 LKM 版本需要）修补 `init_boot`**:
+
+   * 备份您设备当前的 `init_boot.img`。
+
+   * 使用 KernelSU Manager App 选择并修补该镜像。
+
+   * 将修补后生成的 `init_boot.img` 通过 Fastboot 或 Recovery 刷入设备的 `init_boot` 分区。
+
+5. **重启设备**, 享受新内核带来的快感！
+
+## 📥 下载
+
+所有最新版本都可以在 [**Releases 页面**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8350_Z3/releases) 找到。
+
+## ⚠️ 免责声明
+
+刷机有风险，操作需谨慎。在进行任何操作前，请务必完整备份您的个人数据。因刷入此内核而导致的任何设备损坏或数据丢失，本人概不负责。
+
+---
+
+# 🥺 小小拜托
+
+## 求求你了，不要拿这个内核去适配 KernelSU-Next 啦～
+😭😭😭
+
+KernelSU-Next 不是 KernelSU 官方开发的，也不是官方认可的改进版，
+而且它的开发者有一些很让人摸不着头脑的操作……
+
+[岁月史书](https://web.archive.org/web/20250211155215/https://github.com/rifsxd/KernelSU-Next/issues/145)
+
+如果你想要类似功能的话，拜托用 **SukiSU** 好不好嘛～
+它更稳定，也更值得信赖！
+
+---
+
+## 如果你还是坚持要适配 KernelSU-Next……
+我真的会呜呜呜哭出来的！！！
+(｡•́︿•̀｡)
+拜托啦～谢谢谢谢！
+
+---
 
 
-- If the patch has been submitted to LKML, but not accepted into any maintainer tree
-    - tag the patch subject with `FROMLIST:`
-    - add a `Link:` tag with a link to the submittal on lore.kernel.org
-    - if changes were required, use `BACKPORT: FROMLIST:`
-    - Example:
-```
-        FROMLIST: important patch from upstream
 
-        This is the detailed description of the important patch
+# Kokuban Kernel for Samsung Galaxy Z3 Series
 
-        Signed-off-by: Fred Jones <fred.jones@foo.org>
+<p align="center">
+<img src="https://raw.githubusercontent.com/YuzakiKokuban/Kokuban_Kernel_CI_Center/main/docs/kokuban_logo.png" alt="Logo" width="150">
+</p>
 
-        Bug: 135791357
-        Link: https://lore.kernel.org/lkml/20190619171517.GA17557@someone.com/
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+<p align="center">
+<a href="https://github.com/YuzakiKokuban/android_kernel_samsung_sm8350_Z3/releases"><img src="https://img.shields.io/github/v/release/YuzakiKokuban/android_kernel_samsung_sm8750?style=for-the-badge&logo=github&color=blue" alt="GitHub release"></a>
+<a href="https://t.me/YuzakiKokuban"><img src="https://img.shields.io/badge/Telegram-Chat-blue.svg?style=for-the-badge&logo=telegram" alt="Telegram"></a>
+</p>
 
-## Requirements for Android-specific patches: `ANDROID:`
+This is a high-performance custom kernel for the **Samsung Galaxy Z3 Series**, built upon Samsung's official kernel source. It is designed to deliver exceptional stability and smoothness while integrating the latest KernelSU features for the ultimate user experience.
 
-- If the patch is fixing a bug to Android-specific code
-    - tag the patch subject with `ANDROID:`
-    - add a `Fixes:` tag that cites the patch with the bug
-    - Example:
-```
-        ANDROID: fix android-specific bug in foobar.c
+## 📌 Highlights
 
-        This is the detailed description of the important fix
+* **Official Source Base**: Built on the latest official kernel source from Samsung, ensuring optimal compatibility and stability.
 
-        Fixes: 1234abcd2468 ("foobar: add cool feature")
-        Change-Id: I4caaaa566ea080fa148c5e768bb1a0b6f7201c01
-        Signed-off-by: Joe Smith <joe.smith@foo.org>
-```
+* **Performance-Tuned**: Targeted performance and scheduling optimizations for a smoother daily usage and gaming experience.
 
-- If the patch is a new feature
-    - tag the patch subject with `ANDROID:`
-    - add a `Bug:` tag with the Android bug (required for android-specific features)
+* **KernelSU Integrated**: Comes with multiple KernelSU variants (Official, MKSU, SukiSU-Ultra) built-in for an out-of-the-box experience.
 
-# Vibrator driver for HHG device
-## How to merge the driver into kernel source tree
+* **Version Info**: `-nongki-Kokuban-Wisadel`
 
- 1. Copy \${this_project}/drivers/hid/hid-aksys.c into \${your_kernel_root}/drivers/hid/
+## 🧩 Available Variants Explained
 
- 2. Compare and merge \${this_project}/drivers/hid/hid-ids.h into \${your_kernel_root}/drivers/hid/hid-ids.h :
- Add the following code before the last line of this file
+* **LKM (Loadable Kernel Module)**
 
-    ```c
-		#define USB_VENDER_ID_QUALCOMM  0x0a12
-		#define USB_VENDER_ID_TEMP_HHG_AKSY 0x1234
-		#define USB_PRODUCT_ID_AKSYS_HHG  0x1000
-    ```
+  * Does not include any built-in root solution, maintaining the purity of the stock kernel.
 
- 3. Merge \${this_project}/drivers/hid/Kconfig into \${your_kernel_root}/drivers/hid/Kconfig :
-Add the following code before the last line of this file
+  * **Security**: Only essential Samsung security policies that affect modding (like RKP, KDP) are removed.
 
-		config HID_AKSYS_QRD
-    		tristate "AKSys gamepad USB adapter support"
-    		depends on HID
-    		---help---
-    		Support for AKSys gamepad USB adapter
+  * **Usage**: Requires you to manually patch your device's `init_boot` partition using the KernelSU Manager App to achieve root.
 
-    	config AKSYS_QRD_FF
-    		bool "AKSys gamepad USB adapter force feedback support"
-    		depends on HID_AKSYS_QRD
-    		select INPUT_FF_MEMLESS
-    		---help---
-    		Say Y here if you have a AKSys gamepad USB adapter and want to
-    		enable force feedback support for it.
-    		
- 4. Merge \${this_project}/drivers/hid/Makefile into \${your_kernel_root}/drivers/hid/Makefile :
- Add the following code at the end of this file
+* **KSU (KernelSU)**
 
-		obj-$(CONFIG_HID_AKSYS_QRD)	+= hid-aksys.o
-		
- 5. Modify your kernel's default build configuration file. Add the following two lines:
+  * Built-in with the official, unmodified KernelSU for the most authentic root experience.
 
-        CONFIG_HID_AKSYS_QRD=m
-        CONFIG_AKSYS_QRD_FF=y
+* **MKSU (Magic KernelSU)**
+
+  * Features KernelSU modified by `5ec1cff`, which notably supports Magic Mount for easier module management.
+
+* **SukiSUU (SukiSU-Ultra)**
+
+  * Integrated with the powerful SukiSU-Ultra, supporting SUSFS and KPM modules, offering advanced features for power users.
+
+## ⚙️ Installation Guide
+
+1. **Unlock Bootloader**: Ensure your device's bootloader is unlocked.
+
+2. **Flash Recovery**: It is recommended to use the latest version of TWRP or OrangeFox Recovery.
+
+3. **Flash Kernel**: Flash the kernel `zip` package downloaded from the Releases page in this project via Recovery.
+
+4. **(LKM Version Only) Patch `init_boot`**:
+
+   * Back up your current `init_boot.img`.
+
+   * Use the KernelSU Manager App to select and patch this image.
+
+   * Flash the resulting `kernelsu_boot.img` to your device's `init_boot` partition via Fastboot or Recovery.
+
+5. **Reboot your device** and enjoy the new kernel!
+
+## 📥 Downloads
+
+All the latest builds can be found on the [**Releases Page**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8350_Z3/releases).
+
+## ⚠️ Disclaimer
+
+Flashing custom software carries inherent risks. Please make a full backup of your personal data before proceeding. I am not responsible for any damage to your device or data loss that may occur as a result of flashing this kernel.
+
+---
+
+# 🥺 A Little Request
+
+## Please, please don't use this kernel for adapting KernelSU-Next~
+😭😭😭
+
+KernelSU-Next is NOT developed by the official KernelSU team, nor is it an officially endorsed improvement.
+Also, its developer has done some really confusing and questionable things...
+
+[Some Records](https://web.archive.org/web/20250211155215/https://github.com/rifsxd/KernelSU-Next/issues/145)
+
+If you need similar functionality, please use **SukiSU**, okay?
+It's much more stable and trustworthy!
+
+---
+
+## If you still insist on adapting it to KernelSU-Next...
+I might actually burst into tears!!!
+(｡•́︿•̀｡)
+Pleaseee~ Thank you so much!
+
+---
+
+
+<p align="center">
+<a href="https://www.paypal.me/LangQin280">☕ Support Me</a>
+</p>

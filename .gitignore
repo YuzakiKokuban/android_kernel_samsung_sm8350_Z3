@@ -1,0 +1,11 @@
+# Build artifacts
+/out/
+/toolchain/
+kernel_build_log.txt
+localversion
+build.sh
+samsung_update.sh
+# KernelSU specific
+/KernelSU/
+# Caching
+/.ccache/
