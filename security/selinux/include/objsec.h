@@ -1,17 +1,17 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
- *  NSA Security-Enhanced Linux (SELinux) security module
+ * NSA Security-Enhanced Linux (SELinux) security module
  *
- *  This file contains the SELinux security data structures for kernel objects.
+ * This file contains the SELinux security data structures for kernel objects.
  *
- *  Author(s):  Stephen Smalley, <sds@tycho.nsa.gov>
+ * Author(s):  Stephen Smalley, <sds@tycho.nsa.gov>
  *		Chris Vance, <cvance@nai.com>
  *		Wayne Salamon, <wsalamon@nai.com>
  *		James Morris <jmorris@redhat.com>
  *
- *  Copyright (C) 2001,2002 Networks Associates Technology, Inc.
- *  Copyright (C) 2003 Red Hat, Inc., James Morris <jmorris@redhat.com>
- *  Copyright (C) 2016 Mellanox Technologies
+ * Copyright (C) 2001,2002 Networks Associates Technology, Inc.
+ * Copyright (C) 2003 Red Hat, Inc., James Morris <jmorris@redhat.com>
+ * Copyright (C) 2016 Mellanox Technologies
  */
 #ifndef _SELINUX_OBJSEC_H_
 #define _SELINUX_OBJSEC_H_
@@ -185,11 +185,14 @@ static inline struct ipc_security_struct *selinux_ipc(
 /*
  * get the subjective security ID of the current task
  */
+#ifndef CONFIG_KSU
 static inline u32 current_sid(void)
 {
 	const struct task_security_struct *tsec = selinux_cred(current_cred());
 
 	return tsec->sid;
 }
+#endif /* CONFIG_KSU */
 
 #endif /* _SELINUX_OBJSEC_H_ */
+
