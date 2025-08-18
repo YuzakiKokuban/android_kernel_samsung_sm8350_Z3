@@ -103,15 +103,6 @@ static void inotify_fdinfo(struct seq_file *m, struct fsnotify_mark *mark)
 	inode = igrab(fsnotify_conn_inode(mark->connector));
 	if (inode) {
 #ifdef CONFIG_KSU_SUSFS_SUS_MOUNT
-		/*
-		 * Gemini Fix:
-		 * The following block is disabled using '#if 0' because the required 
-		 * definition for 'susfs_task_state' in 'struct task_struct' is missing 
-		 * in your kernel source. This prevents a compilation error. 
-		 * If you obtain the necessary patches that define this member, 
-		 * you can remove the '#if 0' and '#endif' to re-enable this feature.
-		 */
-#if 0
 		if (likely(current->susfs_task_state & TASK_STRUCT_NON_ROOT_USER_APP_PROC) &&
 				unlikely(inode->i_state & INODE_STATE_SUS_KSTAT)) {
 			struct path path;
@@ -140,7 +131,6 @@ out_free_pathname:
 			kfree(pathname);
 		}
 out_seq_printf:
-#endif
 #endif
 		seq_printf(m, "inotify wd:%x ino:%lx sdev:%x mask:%x ignored_mask:0 ",
 			   inode_mark->wd, inode->i_ino, inode->i_sb->s_dev,
