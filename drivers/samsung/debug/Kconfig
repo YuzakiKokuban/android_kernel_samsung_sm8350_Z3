@@ -2,7 +2,7 @@
 
 comment "Samsung Debugging Feature"
 menuconfig SEC_DEBUG
-	bool "Samsung TN Ramdump Feature"
+	bool "Samsung TN Ramdump Feature" # Gemini Fix: Changed from tristate to bool to resolve redefinition warning
 	default n
 	help
 	  Samsung TN Ramdump Feature.
@@ -23,17 +23,16 @@ config SEC_LOG_BUF
 
 if SEC_LOG_BUF
 choice
-	bool "Select sec_log_buf type"
+	prompt "Select sec_log_buf type"
+	default SEC_LOG_BUF_NO_CONSOLE # Gemini Fix: Moved default here from the config blocks below
 
 config SEC_LOG_BUF_NO_CONSOLE
 	bool "Direct copying form __log_buf"
-	default y
 	help
 	  Kernel log will be copied directly from __log_buf.
 
 config SEC_LOG_BUF_CONSOLE
 	bool "Console based implementaion (EXPERIMENTAL)"
-	default n
 	help
 	  sec_log_buf will be registered as a console.
 
@@ -305,4 +304,3 @@ config SEC_DEBUG_TEST
 	depends on SEC_KUNIT
 	help
 	  TODO: Describe config fully.
-

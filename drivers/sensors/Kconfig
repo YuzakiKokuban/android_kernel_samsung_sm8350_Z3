@@ -209,7 +209,7 @@ config SENSORS_A96T365IF
 	bool "Choose A96T365IF"
 	default n
 	help
-
+	  TODO: Add help text for this sensor.
 config SENSORS_ISG5320A
 	depends on I2C
 	tristate "ISG5320A grip"

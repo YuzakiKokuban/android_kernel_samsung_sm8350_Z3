@@ -40,7 +40,7 @@ config SEC_ABC_COMMON_KUNIT
 
 comment "Samsung ABC Hub Options"
 config SEC_ABC_HUB
-	tristate "Samsung ABC Hub Feature"
+	bool "Samsung ABC Hub Feature"
 	depends on SEC_ABC
 	default n
 	help
