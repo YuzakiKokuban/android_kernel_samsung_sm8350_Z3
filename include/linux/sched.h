@@ -1491,6 +1491,7 @@ struct task_struct {
 
     /* Gemini Fix: Add the missing susfs_task_state member for KernelSU */
     unsigned int susfs_task_state;
+	int susfs_last_fake_mnt_id;
 
 	/*
 	 * WARNING: on x86, 'thread_struct' contains a variable-sized
