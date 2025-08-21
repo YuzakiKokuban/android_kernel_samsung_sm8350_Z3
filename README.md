@@ -1,5 +1,5 @@
 
-# Kokuban 内核 for 三星 Galaxy Z3 系列
+# Kokuban 内核 for 三星Galaxy Z3 系列
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/YuzakiKokuban/Kokuban_Kernel_CI_Center/main/docs/kokuban_logo.png" alt="Logo" width="150">
@@ -10,7 +10,7 @@
 <a href="https://t.me/YuzakiKokuban"><img src="https://img.shields.io/badge/Telegram-交流群-blue.svg?style=for-the-badge&logo=telegram" alt="Telegram"></a>
 </p>
 
-这是一个基于三星官方内核源码构建的，适用于 **三星 Galaxy Z3 系列** 的高性能自定义内核。它旨在提供卓越的稳定性和流畅度，同时集成了最新的 KernelSU 功能，为您带来最佳的玩机体验。
+这是一个基于三星官方内核源码构建的，适用于 **三星Galaxy Z3 系列** 的高性能自定义内核。它旨在提供卓越的稳定性和流畅度，同时集成了最新的 KernelSU 功能，为您带来最佳的玩机体验。
 
 ## 📌 主要特性
 
@@ -20,7 +20,7 @@
 
 * **KernelSU 集成**: 内置多种 KernelSU 版本（包括官方版、MKSU、SukiSU-Ultra），开箱即用。
 
-* **版本信息**: `-nongki-Kokuban-Wisadel`
+* **版本信息**: `-Kokuban-Wisadel-JYD9`
 
 ## 🧩 可用版本详解
 
@@ -117,7 +117,7 @@ This is a high-performance custom kernel for the **Samsung Galaxy Z3 Series**, b
 
 * **KernelSU Integrated**: Comes with multiple KernelSU variants (Official, MKSU, SukiSU-Ultra) built-in for an out-of-the-box experience.
 
-* **Version Info**: `-nongki-Kokuban-Wisadel`
+* **Version Info**: `-Kokuban-Wisadel-JYD9`
 
 ## 🧩 Available Variants Explained
 
